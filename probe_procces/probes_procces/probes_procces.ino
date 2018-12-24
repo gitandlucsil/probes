@@ -68,17 +68,17 @@ void loop() {
   /*Monta o objeto JSON*/
   JsonArray& array = jsonBuffer.createArray();
   JsonObject& j_obj1 = jsonBuffer.createObject();
-  j_obj1["id"] = P1.id;
-  j_obj1["value"] = P1.value;
+  j_obj1["id_value"] = P1.id;
+  j_obj1["read_value"] = P1.value;
   JsonObject& j_obj2 = jsonBuffer.createObject();
-  j_obj2["id"] = P2.id;
-  j_obj2["value"] = P2.value;
+  j_obj2["id_value"] = P2.id;
+  j_obj2["read_value"] = P2.value;
   JsonObject& j_obj3 = jsonBuffer.createObject();
-  j_obj3["id"] = P3.id;
-  j_obj3["value"] = P3.value;
+  j_obj3["id_value"] = P3.id;
+  j_obj3["read_value"] = P3.value;
   JsonObject& j_obj4 = jsonBuffer.createObject();
-  j_obj4["id"] = P4.id;
-  j_obj4["value"] = P4.value;
+  j_obj4["id_value"] = P4.id;
+  j_obj4["read_value"] = P4.value;
   array.add(j_obj1);
   array.add(j_obj2);
   array.add(j_obj3);
