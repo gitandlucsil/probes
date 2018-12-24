@@ -39,6 +39,7 @@ void readFromProbes(int id, int *value)
 }
 /*BBuffer JSON da biblioteca ArduinoJSON*/
 DynamicJsonBuffer jsonBuffer;
+StaticJsonBuffer<200> jsonBuffer2;
 
 void setup()
 {
@@ -65,18 +66,25 @@ void loop() {
   readFromProbes(P3.id,&P3.value);
   readFromProbes(P4.id,&P4.value);
   /*Monta o objeto JSON*/
-  JsonObject& json = jsonBuffer.createObject();
-  json["id_1"] = P1.id;
-  json["value_1"] = P1.value;
-  json["id_2"] = P2.id;
-  json["value_2"] = P2.value;
-  json["id_3"] = P3.id;
-  json["value_3"] = P3.value;
-  json["id_4"] = P4.id;
-  json["value_4"] = P4.value;
+  JsonArray& array = jsonBuffer.createArray();
+  JsonObject& j_obj1 = jsonBuffer.createObject();
+  j_obj1["id"] = P1.id;
+  j_obj1["value"] = P1.value;
+  JsonObject& j_obj2 = jsonBuffer.createObject();
+  j_obj2["id"] = P2.id;
+  j_obj2["value"] = P2.value;
+  JsonObject& j_obj3 = jsonBuffer.createObject();
+  j_obj3["id"] = P3.id;
+  j_obj3["value"] = P3.value;
+  JsonObject& j_obj4 = jsonBuffer.createObject();
+  j_obj4["id"] = P4.id;
+  j_obj4["value"] = P4.value;
+  array.add(j_obj1);
+  array.add(j_obj2);
+  array.add(j_obj3);
+  array.add(j_obj4);
   /*Envia para a serial*/
-  json.printTo(Serial);
   Serial.print("\n");
-  Serial.flush();
+  array.printTo(Serial);
   delay(5000);
 }
