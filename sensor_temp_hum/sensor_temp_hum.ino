@@ -1,91 +1,82 @@
 #include "DHT.h" //Biblioteca retirada de https://github.com/adafruit/DHT-sensor-library
 #include "ArduinoJson.h" //Biblioteca retirada de https://github.com/bblanchon/ArduinoJson
 
+/*Definicoes e estruturas para trabalhar com sensor DHT11*/
 #define DHTPIN_1 A1
 #define DHTPIN_2 A2
 #define DHTTYPE DHT11
-
 DHT dht_1(DHTPIN_1, DHTTYPE);
 DHT dht_2(DHTPIN_2, DHTTYPE);
-
-struct probe_t_h{
-  int humidity;
-  int temperature;
+/*Estrutura de dado para trabalhar com os sensores, responsavel pelo envio da informação para o servidor*/
+struct probe{
+  int id;
+  char *descriptor;
+  int value;
 };
-
-probe_t_h probe1;
-probe_t_h probe2;
-
-void getUmidity(int *h_1, int *h_2)
+/*Instanciação dos sensores*/
+probe P1;
+probe P2;
+probe P3;
+probe P4;
+/*Função responsável para recuperar os valores dos sensores, recebendo como parametro o id e o endereco de memoria em que se deseja atualizar o valor*/
+void readFromProbes(int id, int *value)
 {
-  *h_1 = (int) dht_1.readHumidity();
-  *h_2 = (int) dht_2.readHumidity();
+  switch(id)
+  {
+    case 1:
+      *value = (int) dht_1.readTemperature();
+      break;
+    case 2:
+      *value = (int) dht_1.readHumidity();
+      break;
+    case 3:
+      *value = (int) dht_2.readTemperature();
+      break;
+    case 4:
+      *value = (int) dht_2.readHumidity();
+      break; 
+  }
 }
-
-void getTemperature(int *t_1, int *t_2)
-{
-  *t_1 = (int) dht_1.readTemperature();
-  *t_2 = (int) dht_2.readTemperature();
-}
-
+/*BBuffer JSON da biblioteca ArduinoJSON*/
 DynamicJsonBuffer jsonBuffer;
 
 void setup()
 {
+  /*Inicializa a serial*/
   Serial.begin(9600);
+  /*Inicializa os modulos DHT11*/
   dht_1.begin();
   dht_2.begin();
+  /*Inicializa as estrutras dos sensores*/
+  P1.id = 1;
+  P1.descriptor = (char *)"T1";
+  P2.id = 2;
+  P2.descriptor = (char *)"U1";
+  P3.id = 3;
+  P3.descriptor = (char *)"T2";
+  P4.id = 4;
+  P4.descriptor = (char *)"U2";
 }
 
 void loop() {
-  
-  getUmidity(&probe1.humidity,&probe2.humidity);
-  getTemperature(&probe1.temperature,&probe2.temperature);
+  /*Realiza as leituras dos sensores*/
+  readFromProbes(P1.id,&P1.value);
+  readFromProbes(P2.id,&P2.value);
+  readFromProbes(P3.id,&P3.value);
+  readFromProbes(P4.id,&P4.value);
+  /*Monta o objeto JSON*/
   JsonObject& json = jsonBuffer.createObject();
-  json["temp_1"] = probe1.temperature;
-  json["temp_2"] = probe2.temperature;
-  json["hum_1"] = probe1.humidity;
-  json["hum_2"] = probe2.humidity;
+  json["id_1"] = P1.id;
+  json["value_1"] = P1.value;
+  json["id_2"] = P2.id;
+  json["value_2"] = P2.value;
+  json["id_3"] = P3.id;
+  json["value_3"] = P3.value;
+  json["id_4"] = P4.id;
+  json["value_4"] = P4.value;
+  /*Envia para a serial*/
   json.printTo(Serial);
+  Serial.print("\n");
+  Serial.flush();
   delay(5000);
-  /*int humidity_1 = (int) dht_1.readHumidity();
-  int temperature_1 = (int) dht_1.readTemperature();
-  int humidity_2 = (int) dht_2.readHumidity();
-  int temperature_2 = (int) dht_2.readTemperature();
-  int humidity_3 = (int) dht_3.readHumidity();
-  int temperature_3 = (int) dht_3.readTemperature();*/
- 
-  /*if(isnan(probe1.temperature) || isnan(probe1.humidity)){
-    Serial.println("Falha ao ler do sensor DHT 1!");
-  }else{
-    Serial.print("Umidade Sensor 1: ");
-    Serial.print(probe1.humidity);
-    Serial.print(" %");
-    Serial.print("Temperatura Sensor 1: ");
-    Serial.print(probe1.temperature);
-    Serial.print(" ºC");
-    Serial.print("\n");
-  }
-  if(isnan(probe2.temperature) || isnan(probe2.humidity)){
-    Serial.println("Falha ao ler do sensor DHT 2!");
-  }else{
-    Serial.print("Umidade Sensor 2: ");
-    Serial.print(probe2.humidity);
-    Serial.print(" %");
-    Serial.print("Temperatura Sensor 2: ");
-    Serial.print(probe2.temperature);
-    Serial.print(" ºC");
-    Serial.print("\n");
-  }
-  if(isnan(probe3.temperature) || isnan(probe3.humidity)){
-    Serial.println("Falha ao ler do sensor DHT 3!");
-  }else{
-    Serial.print("Umidade Sensor 3: ");
-    Serial.print(probe3.humidity);
-    Serial.print(" %");
-    Serial.print("Temperatura Sensor 3: ");
-    Serial.print(probe3.temperature);
-    Serial.print(" ºC");
-    Serial.print("\n");*/
-
 }
