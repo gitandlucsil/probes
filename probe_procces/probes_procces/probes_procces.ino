@@ -84,7 +84,7 @@ void loop() {
   array.add(j_obj3);
   array.add(j_obj4);
   /*Envia para a serial*/
-  Serial.print("\n");
+  //Serial.print("\n");
   array.printTo(Serial);
   delay(5000);
 }
