@@ -86,5 +86,6 @@ void loop() {
   /*Envia para a serial*/
   //Serial.print("\n");
   array.printTo(Serial);
-  delay(5000);
+  Serial.flush();
+  delay(120000);
 }
