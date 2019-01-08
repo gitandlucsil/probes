@@ -68,16 +68,24 @@ void loop() {
   /*Monta o objeto JSON*/
   JsonArray& array = jsonBuffer.createArray();
   JsonObject& j_obj1 = jsonBuffer.createObject();
-  j_obj1["id_value"] = P1.id;
+  JsonObject&obj_idf1 = j_obj1.createNestedObject("probesidf");
+  obj_idf1["id_value"] = P1.id;
+  obj_idf1["description"] = P1.descriptor;
   j_obj1["read_value"] = P1.value;
   JsonObject& j_obj2 = jsonBuffer.createObject();
-  j_obj2["id_value"] = P2.id;
+  JsonObject&obj_idf2 = j_obj2.createNestedObject("probesidf");
+  obj_idf2["id_value"] = P2.id;
+  obj_idf2["description"] = P2.descriptor;
   j_obj2["read_value"] = P2.value;
   JsonObject& j_obj3 = jsonBuffer.createObject();
-  j_obj3["id_value"] = P3.id;
+  JsonObject&obj_idf3 = j_obj3.createNestedObject("probesidf");
+  obj_idf3["id_value"] = P3.id;
+  obj_idf3["description"] = P3.descriptor;
   j_obj3["read_value"] = P3.value;
   JsonObject& j_obj4 = jsonBuffer.createObject();
-  j_obj4["id_value"] = P4.id;
+  JsonObject&obj_idf4 = j_obj4.createNestedObject("probesidf");
+  obj_idf4["id_value"] = P4.id;
+  obj_idf4["description"] = P4.descriptor;
   j_obj4["read_value"] = P4.value;
   array.add(j_obj1);
   array.add(j_obj2);
@@ -87,5 +95,6 @@ void loop() {
   //Serial.print("\n");
   array.printTo(Serial);
   Serial.flush();
-  delay(120000);
+  delay(30000);
+  //delay(120000);
 }
