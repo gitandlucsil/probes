@@ -14,5 +14,4 @@ struct probe{
 Sendo, "id" o identificador do sesnor, "descriptor" uma string para descrever o sensor e "value" o valor de leitura no formato inteiro.
 
 A saída é dada em uma mensagem JSON no seguinte formato:
-
-[{"id":1,"value":26},{"id":2,"value":74},{"id":3,"value":27},{"id":4,"value":70}]
+[{"probesidf":{"id_value":1,"description":"T1"},"read_value":25},{"probesidf":{"id_value":2,"description":"U1"},"read_value":72},{"probesidf":{"id_value":3,"description":"T2"},"read_value":26},{"probesidf":{"id_value":4,"description":"U2"},"read_value":68}]
