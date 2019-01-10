@@ -1,4 +1,4 @@
-# dashboard-temperature
+# probes
 Leitura de sensores a partir de um controlador, enviando as respostas em formato JSON.
 
 No exemplo do código, é utilizado um sensor de temperatura do modelo DHT11 como exemplo prático, porém as estruturas e funções definidas são para uso geral, independente do sesor.
