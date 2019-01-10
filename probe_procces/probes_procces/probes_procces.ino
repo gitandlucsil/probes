@@ -37,9 +37,8 @@ void readFromProbes(int id, int *value)
       break; 
   }
 }
-/*BBuffer JSON da biblioteca ArduinoJSON*/
+/*Buffer JSON da biblioteca ArduinoJSON*/
 DynamicJsonBuffer jsonBuffer;
-StaticJsonBuffer<200> jsonBuffer2;
 
 void setup()
 {
@@ -92,7 +91,6 @@ void loop() {
   array.add(j_obj3);
   array.add(j_obj4);
   /*Envia para a serial*/
-  //Serial.print("\n");
   array.printTo(Serial);
   Serial.flush();
   delay(30000);
