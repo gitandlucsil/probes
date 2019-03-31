@@ -38,24 +38,25 @@ void readFromProbes(int id, int *value)
 /*Função que transforma os objetos JSON em String*/
 void mountJSON(String *json_to_mount)
 {
-  *json_to_mount += "[{'id:";
+  *json_to_mount = "";
+  *json_to_mount += "[{\"id\":";
   *json_to_mount += p1.id;
-  *json_to_mount += ", read_value: ";
+  *json_to_mount += ", \"read_value\": ";
   *json_to_mount += p1.value;
   *json_to_mount += "},";
-  *json_to_mount += "{";
+  *json_to_mount += "{\"id\":";
   *json_to_mount += p2.id;
-  *json_to_mount += ", read_value: ";
+  *json_to_mount += ", \"read_value\": ";
   *json_to_mount += p2.value;
   *json_to_mount += "},";
-  *json_to_mount += "{";
+  *json_to_mount += "{\"id\":";
   *json_to_mount += p3.id;
-  *json_to_mount += ", read_value: ";
+  *json_to_mount += ", \"read_value\": ";
   *json_to_mount += p3.value;
   *json_to_mount += "},";
-  *json_to_mount += "{";
+  *json_to_mount += "{\"id\":";
   *json_to_mount += p4.id;
-  *json_to_mount += ", read_value: ";
+  *json_to_mount += ", \"read_value\": ";
   *json_to_mount += p4.value;
   *json_to_mount += "}]";
 }
